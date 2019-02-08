@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var load = require('../functions/load')
+var Manager = require('../functions/manager')
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  //load.load()
-  res.render('index', { title: 'Express' });
+  Manager.getGame(results => {
+    res.json({ data: results })
+  })
 });
 
-module.exports = router;
+module.exports = router

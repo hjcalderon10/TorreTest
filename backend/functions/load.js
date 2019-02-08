@@ -1,16 +1,14 @@
 const axios = require('axios')
 const Load = {}
 const server = process.env.SERVER
-var mongo = require('./mongo')
 
-Load.load = (callback) => {
-  axios.get(`${server}/people`)
+Load.startGame = (search, callback) => {
+  axios.get(`${server}/people?${search}`)
     .then(list => {
       const promises = list.data.map(element => helper(element))
       Promise.all(promises)
         .then(results => {
           callback(results)
-          console.log(results)
         })
         .catch(err => console.log(err))
     })

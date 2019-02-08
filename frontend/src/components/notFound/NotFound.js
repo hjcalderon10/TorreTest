@@ -13,9 +13,9 @@ class NotFound extends Component{
 	render(){
 		return (
 			<div>
-			    <h1>¡Woops, camino equivocado!</h1>
-			    <p>Parece que has desviado tu busqueda.</p>
-			    <p>To begin click <Link to='/'>Back to Back</Link></p>
+			    <h1>¡Woops, Wrong path!</h1>
+			    <p>Seems like you lost your track.</p>
+			    <p>Let's take a step <Link to='/'>back!</Link></p>
 			</div>
 		)
 	}
