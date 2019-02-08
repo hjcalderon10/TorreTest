@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
+import EducationElement from './EducationElement'
 
 class Education extends Component{
 
@@ -7,10 +8,18 @@ class Education extends Component{
   }
 
   render(){
+    const education = this.props.education
     return(
-      <div>
-        <p>education</p>
-      </div>
+      <Fragment>
+        {
+          education.length < 1 ?
+          <Fragment/>
+          :
+         education.map((element, i) => {
+          return <EducationElement key={i} element={element}/>
+         })
+        }
+      </Fragment>
     )
   }
 }

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
+import JobElement from './JobElement'
 
 class Jobs extends Component{
 
@@ -7,7 +8,19 @@ class Jobs extends Component{
   }
 
   render(){
-    return(<p>jobs</p>)
+    const jobs = this.props.jobs
+    return(
+      <Fragment>
+        {
+          jobs.length < 1 ?
+          <Fragment/>
+          :
+          jobs.map((element, i) => {
+            return <JobElement key={i} element={element}/>
+         })
+        }
+      </Fragment>
+    )
   }
 }
 

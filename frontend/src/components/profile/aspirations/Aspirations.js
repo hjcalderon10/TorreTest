@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
+import AspirationElement from './AspirationElement'
 
 class Aspirations extends Component{
 
@@ -9,14 +10,16 @@ class Aspirations extends Component{
   render(){
     const aspirations = this.props.aspirations
     return(
-      <div>
+      <Fragment>
         {
           aspirations.length < 1 ?
-          null
+          <Fragment/>
           :
-         <p> aspirations </p>
+          aspirations.map((element, i) => {
+            return <AspirationElement key={i} element={element}/>
+         })
         }
-      </div>
+      </Fragment>
     )
   }
 

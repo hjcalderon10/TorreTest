@@ -7,8 +7,7 @@ Server.startGame = () => {
     Server.sendRequest(params, data => {
       console.log(data)
       localStorage.setItem('gameRoom', data.gameRoom)
-      delete data.gameRoom
-      resolve(data)
+      resolve(data.data)
     })
   })
 }
@@ -30,7 +29,7 @@ Server.sendRequest = (params, callback) => {
   fetch(`${url}/`, params)
   .then(response => response.json())
   .then(response => {
-    const data = response.data[0]
+    const data = response.data
     callback(data)
   })
 }

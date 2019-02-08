@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AchievementElement from './AchievementElement'
 
 class Achievements extends Component{
 
@@ -14,7 +15,9 @@ class Achievements extends Component{
           achievements.length < 1 ?
           null
           :
-          <p> Achievements </p>
+          achievements.map((element, i) => {
+            return <AchievementElement key={i} element={element}/>
+         })
         }
       </div>
     )
