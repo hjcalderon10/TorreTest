@@ -13,12 +13,12 @@ Server.startGame = () => {
   })
 }
 
-Server.nextStep = () => {
+Server.nextStep = (data) => {
   const gameRoom = localStorage.getItem('gameRoom')
   const body = {
-    'stepnumber': localStorage.getItem('step')
+    'stepnumber': localStorage.getItem('step'),
+    'data': data
   }
-  //body algo
   const params = { method: 'POST', headers: {
     'Accept': 'application/json', 
     'content-type': 'application/json', 

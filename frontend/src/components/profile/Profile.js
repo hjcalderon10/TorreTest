@@ -15,8 +15,8 @@ class Profile extends Component {
     super(props)
   }
 
-  firstStep = () => {
-    this.props.nextStep()
+  nextStep = (param) => {
+    this.props.nextStep(param)
   }
 
   render(){
@@ -27,10 +27,11 @@ class Profile extends Component {
           this.props.step === 2 ?
             <PersonTest person={person} 
               img1={this.props.aditionalData.secondImg} 
-              img2={this.props.aditionalData.thirdImg}/>
+              img2={this.props.aditionalData.thirdImg}
+              nextStep={(param) => this.nextStep(param)}/>
           :
             <Fragment>
-              <Timer firstStep={() => this.firstStep()}/>
+              <Timer firstStep={(params) => this.nextStep(params)}/>
               <Person person={person}/>
               <Aspirations aspirations={aspirations}/>
               <Strengths strengths={strengths}/>

@@ -18,6 +18,7 @@ Manager.getGame = (callback) => {
   const rawData = createScenario()[0]
   const sendData = {}
   const refinedData = {}
+  const date = `${new Date()}`
   console.log(rawData)
   refinedData.profile = rawData
   refinedData.haveAchievements = rawData.achievements.length !== 0
@@ -26,7 +27,10 @@ Manager.getGame = (callback) => {
   refinedData.haveExperiences = rawData.experiences.length !== 0
   refinedData.haveJobs = rawData.jobs.length !== 0
   refinedData.haveStrengths = rawData.strengths.length !== 0
-  refinedData.gameRoom = new Date()
+  refinedData.correctAnswers = []
+  refinedData.wrongAnswers = []
+  refinedData.actualItem = ''
+  refinedData.gameRoom = date
   sendData.step = 1
   sendData.data = rawData
   sendData.gameRoom = refinedData.gameRoom
@@ -40,18 +44,136 @@ Manager.firstStep = (gameRoom, callback) => {
   let thirdImg = getRandomImg()
   data.step = 2
   data.data = {}
-  data.data.secondImg = secondImg
-  data.data.thirdImg = thirdImg
+  data.data.param1 = secondImg
+  data.data.param2 = thirdImg
   callback(data)
 }
 
-Manager.nextStep = (gameRoom, stepNumber, callback) => {
-  return steps.manageStep[stepNumber](gameRoom, callback)
+Manager.secondStep = (gameRoom, data, callback) => {
+  mongo.retrieveData(gameRoom, (result)=> {
+    let image = result.person.picture
+    let response = {}
+    mongoUpdate(image, data, result, gameRoom, 'image')
+    response.step = 3
+    response.data = {}
+    response.data.param1 = getRandomName()
+    response.data.param2 = getRandomName()
+    callback(response)
+  })
+}
+
+Manager.thirdStep = (gameRoom, data, callback) => {
+  mongo.retrieveData(gameRoom, (result)=> {
+    let response = {}
+    let name = result.person.name
+    mongoUpdate(name, data, result, gameRoom, 'name')
+    response.step = 4
+    response.data = {}
+    response.data.param1 = getRandomHeadline()
+    response.data.param2 = getRandomHeadline()
+    callback(response)
+  })
+}
+
+Manager.fourthStep = (gameRoom, data, callback) => {
+  mongo.retrieveData(gameRoom, (result)=> {
+    let headline = result.person.professionalHeadline
+    mongoUpdate(headline, data, result, gameRoom, 'headlin')
+    let response = getNextOption(result)
+    if(response.type === '') {
+      response = finishGame(result)
+    }
+    callback(response)
+  })
+}
+
+Manager.fifthStep = (gameRoom, data, type, callback) => {
+  mongo.retrieveData(gameRoom, (result)=> {
+    let actual = result[type]
+    mongoUpdate(actual.length, data, result, gameRoom, type)
+    let response = getNextOption(result)
+    if(response.type === '') {
+      response = finishGame(result)
+    }
+    callback(response)
+  })
+}
+
+Manager.nextStep = (gameRoom, stepNumber, data, type, callback) => {
+  return steps.manageStep[stepNumber](gameRoom, data, type, callback)
 }
 
 steps.manageStep = {
-  '1': (gameRoom, callback) => { Manager.firstStep(gameRoom, callback)},
-  '2': (gameRoom, callback) => { Manager.secondStep(gameRoom, callback)}
+  '1': (gameRoom, data, type, callback) => { Manager.firstStep(gameRoom, callback)},
+  '2': (gameRoom, data, type, callback) => { Manager.secondStep(gameRoom, data, callback)}
+  '3': (gameRoom, data, type, callback) => { Manager.thirdStep(gameRoom, data, callback)}
+  '4': (gameRoom, data, type, callback) => { Manager.fourthStep(gameRoom, data, callback)}
+  '5': (gameRoom, data, type, callback) => { Manager.fifthStep(gameRoom, data, type, callback)}
+}
+
+finishGame = (result) => {
+  response = {}
+  response.data.correctAnswers = result.correctAnswers
+  response.data.wrongAnswers = result.wrongAnswers
+  response.step = -1
+  return response
+}
+
+getNextOption = (result, lastOption) => {
+  let response = {}
+  response.data = {}
+  let label = ''
+  response.step = 5
+  switch(lastOption){
+    case undefined:
+      label = 'aspirations'
+      if(result.haveAspirations){
+        response.type = label
+      }
+      else{
+        response = getNextOption(label)
+      }
+      break
+    case 'aspirations':
+      label = 'strengths'
+      if(result.haveStrengths){
+        response.type = label
+      }
+      else{
+        response = getNextOption(label)
+      }
+      break
+    case 'strengths':
+      label = 'achievements'
+      if(result.haveAchievements){
+        response.type = label
+      }
+      else{
+        response = getNextOption(label)
+      }
+      break
+    case 'achievements':
+      label = 'jobs'
+      if(result.haveJobs){
+        response.type = label
+      }
+      else{
+        response = getNextOption(label)
+      }
+      break
+    case 'jobs':
+      label = 'education'
+      if(result.haveEducation){
+        response.type = label
+      }
+      break
+  }
+  if(label !== ''){
+    response.data.param1 = getRandomPropertyNumber(label)
+    response.data.param2 = getRandomPropertyNumber(label) 
+  }
+  return response
+
 }
 
 getRandomImg = () => {
@@ -65,6 +187,39 @@ getRandomImg = () => {
   }
 }
 
+getRandomName = () => {
+  let scenario = createScenario()[0]
+  let name = scenario.person.name
+  if(name){
+    return name
+  }
+  else{
+    return getRandomName() 
+  }
+}
+
+getRandomHeadline = () => {
+  let scenario = createScenario()[0]
+  let professionalHeadline = scenario.person.professionalHeadline
+  if(professionalHeadline){
+    return professionalHeadline
+  }
+  else{
+    return getRandomHeadline() 
+  }
+}
+
+getRandomPropertyNumber = (type) => {
+  let scenario = createScenario()[0]
+  let answer = scenario[type]
+  if(answer.length > 0){
+    return answer
+  }
+  else{
+    return getRandomPropertyNumber(type)
+  }
+}
+
 createRandomNumber = (max, offset) => {
   return Math.floor(Math.random() * max) + offset
 }
@@ -73,6 +228,16 @@ createScenario = () => {
   const index = createRandomNumber(Object.keys(initialState).length, 0)
   console.log(index)
   return initialState.slice(index, index+1)
+}
+
+mongoUpdate = (element, data, result, gameRoom, type) =>{
+  if(element === data){
+    result.correctAnswers.push(`${type}:${element}`)
+  }
+  else{
+    result.wrongAnswers.push(`${type}:${data}`)
+  }
+  mongo.updateData(gameRoom, result)
 }
 
 module.exports = Manager

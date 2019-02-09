@@ -33,9 +33,10 @@ class Timer extends Component {
 
   render() {
     setTimeout(() => this.startTimer(), 1000)
+    let seconds = this.state.seconds > 9 ? this.state.seconds : `0${this.state.seconds}`
     return(
       <Fragment>
-        s: {this.state.seconds}
+        00:{seconds}
       </Fragment>
     )
   }

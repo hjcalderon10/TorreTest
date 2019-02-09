@@ -24,9 +24,9 @@ class App extends Component {
     }
   }
 
-  nextStep = () => {
+  nextStep = (params) => {
     {
-      Server.nextStep()
+      Server.nextStep(params)
         .then(data => {
           console.log(data)
           this.setState({
@@ -62,7 +62,7 @@ class App extends Component {
           </header>
         
       :
-        <Profile profile={this.state.profile} nextStep={() => this.nextStep()} 
+        <Profile profile={this.state.profile} nextStep={(params) => this.nextStep(params)} 
           step={this.state.step} aditionalData={this.state.aditionalData}/>
       }
       </div>

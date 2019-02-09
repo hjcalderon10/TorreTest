@@ -2,10 +2,6 @@ import React, { Fragment, Component } from 'react'
 
 class PersonTest extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   shuffle = (a) => {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -17,6 +13,10 @@ class PersonTest extends Component{
     return a;
   }
 
+  imgSelected = (imgSelected) => {
+    this.props.nextStep(imgSelected)
+  }
+
   render(){
     let array = []
     array.push(this.props.person.picture)
@@ -25,9 +25,12 @@ class PersonTest extends Component{
     array = this.shuffle(array)
     return (
       <Fragment>
-        <img className='profile_img' src={array[0]}/>
-        <img className='profile_img' src={array[1]}/>
-        <img className='profile_img' src={array[2]}/>
+        <img className='profile_img' src={array[0]} alt='this should be a valid image :c' 
+          onClick={() => this.imgSelected(array[0])}/>
+        <img className='profile_img' src={array[1]} alt='this should be a valid image :c' 
+          onClick={() => this.imgSelected(array[1])}/>
+        <img className='profile_img' src={array[2]} alt='this should be a valid image :c' 
+          onClick={() => this.imgSelected(array[2])}/>
       </Fragment>
       )
   }
