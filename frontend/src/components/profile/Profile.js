@@ -21,14 +21,22 @@ class Profile extends Component {
 
   render(){
     const {person, aspirations, achievements, experiences, education, jobs, strengths} = this.props.profile
+    const {aditionalData, step} = this.props
     return(
       <Fragment>
         {
-          this.props.step === 2 ?
+          step > 1 && step < 5 ?
             <PersonTest person={person} 
-              img1={this.props.aditionalData.secondImg} 
-              img2={this.props.aditionalData.thirdImg}
-              nextStep={(param) => this.nextStep(param)}/>
+              param1={aditionalData.param1} 
+              param2={aditionalData.param2}
+              nextStep={(param) => this.nextStep(param)}
+              step={step}/>
+          :
+          step === 5 ?
+          null
+          : 
+          step === -1 ?
+          null
           :
             <Fragment>
               <Timer firstStep={(params) => this.nextStep(params)}/>

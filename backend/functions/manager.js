@@ -19,7 +19,6 @@ Manager.getGame = (callback) => {
   const sendData = {}
   const refinedData = {}
   const date = `${new Date()}`
-  console.log(rawData)
   refinedData.profile = rawData
   refinedData.haveAchievements = rawData.achievements.length !== 0
   refinedData.haveAspirations = rawData.aspirations.length !== 0
@@ -51,7 +50,8 @@ Manager.firstStep = (gameRoom, callback) => {
 
 Manager.secondStep = (gameRoom, data, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
-    let image = result.person.picture
+    console.log(result)
+    let image = result.profile.person.picture
     let response = {}
     mongoUpdate(image, data, result, gameRoom, 'image')
     response.step = 3
@@ -65,7 +65,7 @@ Manager.secondStep = (gameRoom, data, callback) => {
 Manager.thirdStep = (gameRoom, data, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
     let response = {}
-    let name = result.person.name
+    let name = result.profile.person.name
     mongoUpdate(name, data, result, gameRoom, 'name')
     response.step = 4
     response.data = {}
@@ -77,7 +77,7 @@ Manager.thirdStep = (gameRoom, data, callback) => {
 
 Manager.fourthStep = (gameRoom, data, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
-    let headline = result.person.professionalHeadline
+    let headline = result.profile.person.professionalHeadline
     mongoUpdate(headline, data, result, gameRoom, 'headlin')
     let response = getNextOption(result)
     if(response.type === '') {
@@ -89,7 +89,7 @@ Manager.fourthStep = (gameRoom, data, callback) => {
 
 Manager.fifthStep = (gameRoom, data, type, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
-    let actual = result[type]
+    let actual = result.profile[type]
     mongoUpdate(actual.length, data, result, gameRoom, type)
     let response = getNextOption(result)
     if(response.type === '') {
@@ -122,6 +122,7 @@ finishGame = (result) => {
 getNextOption = (result, lastOption) => {
   let response = {}
   response.data = {}
+  response.type = ''
   let label = ''
   response.step = 5
   switch(lastOption){
@@ -213,7 +214,7 @@ getRandomPropertyNumber = (type) => {
   let scenario = createScenario()[0]
   let answer = scenario[type]
   if(answer.length > 0){
-    return answer
+    return answer.length
   }
   else{
     return getRandomPropertyNumber(type)
@@ -235,7 +236,7 @@ mongoUpdate = (element, data, result, gameRoom, type) =>{
     result.correctAnswers.push(`${type}:${element}`)
   }
   else{
-    result.wrongAnswers.push(`${type}:${data}`)
+    result.wrongAnswers.push(`${type}$${data}`)
   }
   mongo.updateData(gameRoom, result)
 }

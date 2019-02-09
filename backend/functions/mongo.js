@@ -23,8 +23,13 @@ Mongo.retrieveData = (gameRoom, callback) => {
   //query[field] = value
 
   collection.find(query).toArray((err, result) => {
-    callback(result)
+    callback(result[0])
   })
+}
+
+Mongo.updateData = (gameRoom, results) => {
+  let criteria = {'gameRoom': gameRoom}
+  collection.update(criteria, results, (err, count, status) => console.log(`${err} and ${count} and ${status}`))
 }
 
 module.exports = Mongo

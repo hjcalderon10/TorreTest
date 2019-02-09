@@ -10,8 +10,9 @@ class App extends Component {
     super(props)
     this.state = {
       profile: null,
-      step:0,
-      aditionalData: {}
+      step: 0,
+      aditionalData: {},
+      type: ''
     }
   }
 
@@ -24,14 +25,16 @@ class App extends Component {
     }
   }
 
-  nextStep = (params) => {
+  nextStep = (params, type) => {
+    if(type === undefined) { type='nothing to show'}
     {
-      Server.nextStep(params)
+      Server.nextStep(params, type)
         .then(data => {
           console.log(data)
           this.setState({
             step: data.step,
-            aditionalData: data.data
+            aditionalData: data.data,
+            type: data.type
           })
         })
     }
@@ -63,7 +66,7 @@ class App extends Component {
         
       :
         <Profile profile={this.state.profile} nextStep={(params) => this.nextStep(params)} 
-          step={this.state.step} aditionalData={this.state.aditionalData}/>
+          step={this.state.step} aditionalData={this.state.aditionalData} type={this.state.type}/>
       }
       </div>
     )

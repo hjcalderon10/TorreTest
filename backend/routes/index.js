@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   console.log(req.headers.gameroom)
-  Manager.nextStep(req.headers.gameroom, req.body.stepnumber, req.body.data, (data) => {
+  Manager.nextStep(req.headers.gameroom, req.body.stepnumber, req.body.data, req.body.type, (data) => {
     res.json({ data: data })
   })
 })
