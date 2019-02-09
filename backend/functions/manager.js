@@ -78,7 +78,7 @@ Manager.thirdStep = (gameRoom, data, callback) => {
 Manager.fourthStep = (gameRoom, data, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
     let headline = result.profile.person.professionalHeadline
-    mongoUpdate(headline, data, result, gameRoom, 'headlin')
+    mongoUpdate(headline, data, result, gameRoom, 'headline')
     let response = getNextOption(result)
     if(response.type === '') {
       response = finishGame(result)
@@ -246,7 +246,7 @@ checkAtributes = (data) => {
 
 mongoUpdate = (element, data, result, gameRoom, type) =>{
   if(element === data){
-    result.correctAnswers.push(`${type}:${element}`)
+    result.correctAnswers.push(`${type}$${element}`)
   }
   else{
     result.wrongAnswers.push(`${type}$${data}`)

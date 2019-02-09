@@ -11,6 +11,7 @@ class BioTest extends Component{
     array = this.props.shuffle(array)
     return(
       <Fragment>
+        <p> Time to see if you pay attention! how many {type} did you see? </p>
         <p className='element' onClick={() => this.props.nextStep(array[0], type)}> {array[0]} </p>
         <p className='element' onClick={() => this.props.nextStep(array[1], type)}> {array[1]} </p>
         <p className='element' onClick={() => this.props.nextStep(array[2], type)}> {array[2]} </p>

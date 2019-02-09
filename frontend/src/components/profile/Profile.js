@@ -51,11 +51,7 @@ class Profile extends Component {
             <Fragment>
               {
                 step === -1 ?
-                  <Results person={person} 
-                    param1={aditionalData.param1} 
-                    param2={aditionalData.param2}
-                    nextStep={(param) => this.nextStep(param)}
-                    step={step}/>
+                  <Results data={aditionalData}/>
                 :
                   <Timer firstStep={(params) => this.nextStep(params)}/>
               }
