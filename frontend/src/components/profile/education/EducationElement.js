@@ -16,7 +16,7 @@ class EducationElement extends Component{
         </p>
         <p>
           <span className='Subtitles'> Institution: </span>
-          <span className='values'> {information.organizations ? information.organizations[0].name 
+          <span className='values'> {information.organizations.length > 0 ? information.organizations[0].name 
             : `We don't have a clue where this title came from`} </span>
         </p>
       </Fragment>

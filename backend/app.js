@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 var http = require('http')
 var cors = require('cors')
 const Manager = require('./functions/manager')
+const Mongo = require('./functions/mongo')
 
 var index = require('./routes/index')
 
@@ -29,4 +30,5 @@ staticServer.listen(process.env.PORT)
 staticServer.on('listening', () => {
   console.log(`server is running on port ${process.env.PORT}`)
   Manager.createGame()
+  Mongo.openMongo()
 })

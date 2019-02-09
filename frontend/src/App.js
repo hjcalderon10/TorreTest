@@ -9,15 +9,31 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      profile: null
+      profile: null,
+      step:0,
+      aditionalData: {}
     }
   }
 
   startGame = () => {
-    {Server.startGame()
-      .then(data => {
-        this.setState({profile: data})
-      })
+    {
+      Server.startGame()
+        .then(data => {
+          this.setState({profile: data})
+        })
+    }
+  }
+
+  nextStep = () => {
+    {
+      Server.nextStep()
+        .then(data => {
+          console.log(data)
+          this.setState({
+            step: data.step,
+            aditionalData: data.data
+          })
+        })
     }
   }
 
@@ -30,6 +46,13 @@ class App extends Component {
             <p>
               Welcome! this' a little game to test your memory, click on to Start and pay attention!
             </p>
+            <p>
+              You will have 30 seconds to see as much as possible for the profile in the screen.
+              Then, you will see how much you learn for this specific person.
+            </p>
+            <p>
+              Wish u luck!
+            </p>
             <Link
               className="App-link"
               to ="/"
@@ -39,7 +62,8 @@ class App extends Component {
           </header>
         
       :
-        <Profile profile={this.state.profile}/>
+        <Profile profile={this.state.profile} nextStep={() => this.nextStep()} 
+          step={this.state.step} aditionalData={this.state.aditionalData}/>
       }
       </div>
     )

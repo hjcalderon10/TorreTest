@@ -7,19 +7,26 @@ Server.startGame = () => {
     Server.sendRequest(params, data => {
       console.log(data)
       localStorage.setItem('gameRoom', data.gameRoom)
+      localStorage.setItem('step', data.step)
       resolve(data.data)
     })
   })
 }
 
-Server.nexStep = () => {
+Server.nextStep = () => {
   const gameRoom = localStorage.getItem('gameRoom')
-  const body = {}
+  const body = {
+    'stepnumber': localStorage.getItem('step')
+  }
   //body algo
-  const params = { method: 'POST', headers: {'Accept': 'application/json', 'gameRoom': gameRoom}, body: body}
+  const params = { method: 'POST', headers: {
+    'Accept': 'application/json', 
+    'content-type': 'application/json', 
+    'gameRoom': gameRoom
+  }, body: JSON.stringify(body)}
   return new Promise(resolve => {
     Server.sendRequest(params, data => {
-      console.log(data)
+      localStorage.setItem('step', data.step)
       resolve(data)
     })
   })
