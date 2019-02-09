@@ -105,9 +105,9 @@ Manager.nextStep = (gameRoom, stepNumber, data, type, callback) => {
 
 steps.manageStep = {
   '1': (gameRoom, data, type, callback) => { Manager.firstStep(gameRoom, callback)},
-  '2': (gameRoom, data, type, callback) => { Manager.secondStep(gameRoom, data, callback)}
-  '3': (gameRoom, data, type, callback) => { Manager.thirdStep(gameRoom, data, callback)}
-  '4': (gameRoom, data, type, callback) => { Manager.fourthStep(gameRoom, data, callback)}
+  '2': (gameRoom, data, type, callback) => { Manager.secondStep(gameRoom, data, callback)},
+  '3': (gameRoom, data, type, callback) => { Manager.thirdStep(gameRoom, data, callback)},
+  '4': (gameRoom, data, type, callback) => { Manager.fourthStep(gameRoom, data, callback)},
   '5': (gameRoom, data, type, callback) => { Manager.fifthStep(gameRoom, data, type, callback)}
 }
 
