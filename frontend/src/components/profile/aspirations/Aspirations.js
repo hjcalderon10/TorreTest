@@ -3,10 +3,6 @@ import AspirationElement from './AspirationElement'
 
 class Aspirations extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const aspirations = this.props.aspirations
     return(

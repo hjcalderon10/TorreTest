@@ -65,7 +65,7 @@ class App extends Component {
           </header>
         
       :
-        <Profile profile={this.state.profile} nextStep={(params) => this.nextStep(params)} 
+        <Profile profile={this.state.profile} nextStep={(params, type) => this.nextStep(params, type)} 
           step={this.state.step} aditionalData={this.state.aditionalData} type={this.state.type}/>
       }
       </div>

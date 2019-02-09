@@ -2,10 +2,6 @@ import React, { Component, Fragment } from 'react'
 
 class StrengthElement extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const information = this.props.element
     return(

@@ -3,10 +3,6 @@ import AchievementElement from './AchievementElement'
 
 class Achievements extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const achievements = this.props.achievements
     return(

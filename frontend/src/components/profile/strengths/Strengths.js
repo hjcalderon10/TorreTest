@@ -3,10 +3,6 @@ import StrengthElement from './StrengthElement'
 
 class Strengths extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const strengths = this.props.strengths
     return(

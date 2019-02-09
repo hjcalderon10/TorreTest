@@ -2,17 +2,6 @@ import React, { Fragment, Component } from 'react'
 
 class PersonTest extends Component{
 
-  shuffle = (a) => {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
-  }
-
   optionSelected = (optionSelected) => {
     this.props.nextStep(optionSelected)
   }
@@ -68,7 +57,7 @@ class PersonTest extends Component{
     array.push(this.props.person[actualItem])
     array.push(this.props.param1)
     array.push(this.props.param2)
-    array = this.shuffle(array)
+    array = this.props.shuffle(array)
     return actualRender(array)
   }
 

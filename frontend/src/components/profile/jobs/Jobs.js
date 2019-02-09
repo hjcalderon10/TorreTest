@@ -3,10 +3,6 @@ import JobElement from './JobElement'
 
 class Jobs extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const jobs = this.props.jobs
     return(

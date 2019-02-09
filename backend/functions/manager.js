@@ -15,7 +15,7 @@ Manager.createGame = () => {
 }
 
 Manager.getGame = (callback) => {
-  const rawData = createScenario()[0]
+  const rawData = checkAtributes(createScenario()[0])
   const sendData = {}
   const refinedData = {}
   const date = `${new Date()}`
@@ -89,9 +89,11 @@ Manager.fourthStep = (gameRoom, data, callback) => {
 
 Manager.fifthStep = (gameRoom, data, type, callback) => {
   mongo.retrieveData(gameRoom, (result)=> {
+    console.log(result)
+    console.log("kasdasdasdasdadasdadsa.      " + type)
     let actual = result.profile[type]
     mongoUpdate(actual.length, data, result, gameRoom, type)
-    let response = getNextOption(result)
+    let response = getNextOption(result, type)
     if(response.type === '') {
       response = finishGame(result)
     }
@@ -113,6 +115,7 @@ steps.manageStep = {
 
 finishGame = (result) => {
   response = {}
+  response.data = {}
   response.data.correctAnswers = result.correctAnswers
   response.data.wrongAnswers = result.wrongAnswers
   response.step = -1
@@ -123,7 +126,7 @@ getNextOption = (result, lastOption) => {
   let response = {}
   response.data = {}
   response.type = ''
-  let label = ''
+  let label = lastOption
   response.step = 5
   switch(lastOption){
     case undefined:
@@ -132,7 +135,7 @@ getNextOption = (result, lastOption) => {
         response.type = label
       }
       else{
-        response = getNextOption(label)
+        response = getNextOption(result, label)
       }
       break
     case 'aspirations':
@@ -141,7 +144,7 @@ getNextOption = (result, lastOption) => {
         response.type = label
       }
       else{
-        response = getNextOption(label)
+        response = getNextOption(result, label)
       }
       break
     case 'strengths':
@@ -150,7 +153,7 @@ getNextOption = (result, lastOption) => {
         response.type = label
       }
       else{
-        response = getNextOption(label)
+        response = getNextOption(result, label)
       }
       break
     case 'achievements':
@@ -159,7 +162,7 @@ getNextOption = (result, lastOption) => {
         response.type = label
       }
       else{
-        response = getNextOption(label)
+        response = getNextOption(result, label)
       }
       break
     case 'jobs':
@@ -229,6 +232,16 @@ createScenario = () => {
   const index = createRandomNumber(Object.keys(initialState).length, 0)
   console.log(index)
   return initialState.slice(index, index+1)
+}
+
+checkAtributes = (data) => {
+  if(!data.person.professionalHeadline){
+    data.person.professionalHeadline = `I haven't a professional headline`
+  }
+  if(!data.person.name){
+    data.person.name = `I haven't a name`
+  }
+  return data
 }
 
 mongoUpdate = (element, data, result, gameRoom, type) =>{

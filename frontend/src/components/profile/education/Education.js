@@ -3,10 +3,6 @@ import EducationElement from './EducationElement'
 
 class Education extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const education = this.props.education
     return(

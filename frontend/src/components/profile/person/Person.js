@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 
 class Person extends Component{
 
-  constructor(props){
-    super(props)
-  }
-
   render(){
     const {name, picture, email, location, professionalHeadline, weight} = this.props.person
     return (
