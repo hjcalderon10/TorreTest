@@ -1,0 +1,8 @@
+.education{
+	background-color: rgba(204,204,204,0.4);
+	width: 100%;
+}
+
+.education_elements{
+	column-count: 2;
+}

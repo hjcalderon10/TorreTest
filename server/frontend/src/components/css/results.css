@@ -1,0 +1,15 @@
+.right_answers{
+	overflow: auto;
+	max-width: 70%;
+	display: inline-block;
+}
+
+.wrong_answers{
+	overflow: auto;
+	max-width: 70%;
+	display: inline-block;
+}
+
+.profile_img{
+	float: right;
+}

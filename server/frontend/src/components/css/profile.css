@@ -1,0 +1,78 @@
+.profile_img{
+	max-width: 15vw;
+	max-height: 15vw;
+	border-radius: 65%;
+}
+
+.person_img{
+	float:left;
+}
+
+.person_description{
+	overflow: auto;
+	padding-top: 3.5vw;
+	padding-left: 10vw;
+	display: inline-block;
+
+}
+
+.user_specific_property{
+	font-size: 2vw;
+}
+
+.personal_information{
+	overflow: auto;
+}
+
+.weigth{
+	text-align: left;
+}
+
+.timerDiv{
+	border-style: groove;
+	border-width: 5px;
+	border-color: #119DA4;
+	display:inline-flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: flex-start;
+	background-color: #282c44;
+	max-width: 10vw;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	position: fixed;
+	right: 0;
+}
+
+.timer{
+	display: block;
+	padding: 0vw !important;
+	color: white !important;
+}
+
+.person_description p{
+	text-align: left;
+	padding-left: 5vw;
+	max-width: 95%;
+}
+
+.img_test{
+	display: inline-flex;
+}
+
+.element_test .profile_img{
+	margin: 4vw;
+	cursor: pointer;
+}
+
+.element_test .name{
+	margin: 4vw;
+	cursor: pointer;
+	font-size: 4vw;
+}
+
+.element_test .headline{
+	margin: 4vw;
+	cursor: pointer;
+	font-size: 4vw;
+}

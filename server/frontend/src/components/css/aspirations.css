@@ -1,0 +1,8 @@
+.aspirations{
+	background-color: rgba(204,204,204,0.5);
+	width: 100%;
+}
+
+.aspiration_elements{
+	column-count: 2;
+}

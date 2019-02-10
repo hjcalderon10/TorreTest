@@ -1,0 +1,8 @@
+.achievements{
+	background-color: rgba(204,204,204,0.7);
+	width: 100%;
+}
+
+.achievement_elements{
+	column-count: 2;
+}
