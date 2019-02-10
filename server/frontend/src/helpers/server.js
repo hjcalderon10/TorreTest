@@ -1,5 +1,5 @@
 export const Server = {}
-const url = 'http://localhost:8080/api'
+const url = '/api'
 
 Server.startGame = () => {
   const params = { method: 'GET', headers: {'Accept': 'application/json'}}

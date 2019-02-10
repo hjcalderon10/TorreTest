@@ -1,9 +1,12 @@
 {
-  "name": "backend",
+  "name": "TorreTest",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./app.js"
+  },
+  "engines": {
+    "node": "10.15.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
